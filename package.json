@@ -13,6 +13,7 @@
     "package-lock.json": "^1.0.0"
   },
   "devDependencies": {
+    "webmanifest-cli": "^0.3.1",
     "webpack": "^5.30.0",
     "webpack-cli": "^4.6.0"
   },
