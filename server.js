@@ -17,17 +17,27 @@ app.use(express.static("public"));
 
 // mongodb+srv://kspoth08:<Scooter#1>@cluster0.lmx5w.mongodb.net/workout?retryWrites=true&w=majority
 //mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", {
-mongoose.connect(
-  process.env.MONGODB_URI ||
-    "mongodb+srv://kspoth08:Scooter%231%0A@Budget.lmx5w.mongodb.net/Budget?retryWrites=true&w=majority",
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true,
-    useFindAndModify: false,
-  }
-);
+// mongoose.connect(
+//   "mongodb://localhost/budget",
+//   process.env.MONGODB_URI ||
+//     "mongodb+srv://kspoth08:Scooter%231%0A@Budget.lmx5w.mongodb.net/Budget?retryWrites=true&w=majority",
+//   {
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true,
+//     useCreateIndex: true,
+//     useFindAndModify: false,
+//   }
+// );
 
+// mongoose.connection.on("connected", () => {
+//   console.log("connected to mongo!");
+// });
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/budget", {
+  useNewUrlParser: true,
+  useFindAndModify: false,
+  useUnifiedTopology: true,
+  useCreateIndex: true,
+});
 // routes
 app.use(require("./routes/api.js"));
 
