@@ -13,7 +13,6 @@ const staticFilesToPreCache = [
   "/manifest.webmanifest",
 ].concat(iconFiles);
 
-// install
 self.addEventListener("install", function (evt) {
   evt.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
@@ -25,7 +24,6 @@ self.addEventListener("install", function (evt) {
   self.skipWaiting();
 });
 
-// activate
 self.addEventListener("activate", function (evt) {
   evt.waitUntil(
     caches.keys().then((keyList) => {
@@ -43,7 +41,6 @@ self.addEventListener("activate", function (evt) {
   self.clients.claim();
 });
 
-// fetch
 self.addEventListener("fetch", function (evt) {
   if (evt.request.url.includes("/api/transaction")) {
     evt.respondWith(
@@ -52,7 +49,6 @@ self.addEventListener("fetch", function (evt) {
         .then((cache) => {
           return fetch(evt.request)
             .then((response) => {
-              // If the response was good, clone it and store it in the cache.
               if (response.status === 200) {
                 cache.put(evt.request.url, response.clone());
               }
@@ -60,7 +56,6 @@ self.addEventListener("fetch", function (evt) {
               return response;
             })
             .catch((err) => {
-              // Network request failed, try to get it from the cache.
               return cache.match(evt.request);
             });
         })
@@ -68,7 +63,7 @@ self.addEventListener("fetch", function (evt) {
     );
     return;
   }
-  // respond from static cache, request is not for /api/*
+
   evt.respondWith(
     caches.match(evt.request).then(function (response) {
       return response || fetch(evt.request);
